@@ -1,0 +1,10 @@
+[Unit]
+Description=AWSRedrive
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/etc/awsredrivecore/
+ExecStart=/etc/awsredrivecore/AWSRedrive.console
+Restart=on-abort
+[Install]
+WantedBy=multi-user.target

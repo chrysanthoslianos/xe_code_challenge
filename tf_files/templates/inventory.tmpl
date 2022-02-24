@@ -1,0 +1,8 @@
+[servers]
+%{ for index, dns in instance-dns ~}
+${dns} ansible_host=${instance-ip[index]} ansible_user=ubuntu ansible_ssh_private_key_file=../tf_files/xe-code-challenge-key-pair  # ${instance-id[index]}
+%{ endfor ~}
+
+[servers:vars]
+sqs_id = ${sqs-id}
+instance_region = ${region}

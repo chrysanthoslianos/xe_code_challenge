@@ -1,0 +1,7 @@
+tf_files/.terraform.lock.hcl
+tf_files/.terraform/
+tf_files/dev_plan
+tf_files/xe-code-challenge-key-pair
+tf_files/xe-code-challenge-key-pair.pub
+ansible_files/ssh_hosts.sh
+ansible_files/inventories/servers

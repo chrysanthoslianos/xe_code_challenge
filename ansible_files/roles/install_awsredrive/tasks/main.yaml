@@ -1,0 +1,63 @@
+---
+
+- name: install unzip 
+  apt:
+    name: unzip
+    state: present
+  become: yes
+
+- name: download linux package
+  get_url:
+    url: https://github.com/nickntg/awsredrive.core/releases/download/1.0.3/awsredrive.core.linux.zip
+    dest: /home/ubuntu/awsredrive.core.linux.zip
+
+- name: create awsredrive.core url
+  ansible.builtin.file:
+    path: /etc/awsredrivecore/
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: unzip awsredrive.core package
+  ansible.builtin.unarchive:
+    src: /home/ubuntu/awsredrive.core.linux.zip
+    dest: /etc/awsredrivecore/
+    remote_src: yes
+  become: yes
+
+- name: apply correct permissions on awsredrivecore
+  ansible.builtin.file:
+    path: /etc/awsredrivecore/AWSRedrive.console
+    mode: '0744'
+  become: yes
+
+- name: template AWSRedrive.core config
+  template:
+    src: config.json.j2
+    dest: /etc/awsredrivecore/config.json
+  become: yes
+
+- name: awsredrivecore unit template
+  template:
+    src: systemd.j2
+    dest: /etc/systemd/system/awsredrive.service
+  become: yes
+
+- name: systemctl daemon-reload
+  ansible.builtin.systemd:
+    name: awsredrive.service
+    daemon_reload: yes
+  become: yes
+
+- name: enable awsredrive.service
+  ansible.builtin.systemd:
+    name: awsredrive.service
+    state: reloaded
+  become: yes
+
+- name: start service
+  ansible.builtin.systemd:
+    name: awsredrive.service
+    state: started
+  become: yes
+
