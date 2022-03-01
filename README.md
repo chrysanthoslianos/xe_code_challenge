@@ -40,6 +40,7 @@ The terraform dir structure is as such:
 ├── network.tf
 ├── outputs.tf
 ├── provider.tf
+├── iam_role.tf
 ├── templates
 │   └── inventory.tmpl
 ├── variables.tf
